@@ -36,7 +36,7 @@ async def generate_listing(data: ListingRequest):
     )
 
     response = openai.chat.completions.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful real estate listing assistant."},
             {"role": "user", "content": prompt},
