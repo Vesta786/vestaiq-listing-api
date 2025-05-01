@@ -1,5 +1,8 @@
-from fastapi import FastAPI
+# main.py
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from typing import Optional
 import os
 import openai
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,10 +18,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load the OpenAI key
+# Load the key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Match field names exactly with those sent by Wix
+# Define schema
 class ListingRequest(BaseModel):
     propertyType: str
     location: str
@@ -30,14 +33,24 @@ class ListingRequest(BaseModel):
     propertyNumber: str
     postcode: str
     propertySize: str
-    tenure: str
-    condition: str
-    recentlyRenovated: str
-    floorLevel: str
-    furnished: str
-    liftAccess: str
-    parking: str
-    outdoorSpace: str
+    tenure: Optional[str] = None
+    condition: Optional[str] = None
+    recentlyRenovated: Optional[str] = None
+    floorLevel: Optional[str] = None
+    furnished: Optional[str] = None
+    liftAccess: Optional[str] = None
+    parking: Optional[str] = None
+    outdoorSpace: Optional[str] = None
+
+# Add error handler to log validation issues
+@app.exception_handler(Exception)
+async def validation_exception_handler(request: Request, exc: Exception):
+    print("ERROR occurred during request:", await request.json())
+    print("Exception:", str(exc))
+    return JSONResponse(
+        status_code=422,
+        content={"detail": str(exc)}
+    )
 
 @app.post("/generate-listing")
 async def generate_listing(data: ListingRequest):
