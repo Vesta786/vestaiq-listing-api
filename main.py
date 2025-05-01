@@ -24,7 +24,19 @@ class ListingRequest(BaseModel):
     bedrooms: int
     bathrooms: int
     features: str
-    tone: str = "professional"
+    tone: str
+    listingType: str
+    propertyNumber: str
+    postcode: str
+    propertySize: str
+    tenure: str
+    condition: str
+    recentlyRenovated: str
+    floorLevel: str
+    furnished: str
+    liftAccess: str
+    parking: str
+    outdoorSpace: str
 
 @app.post("/generate-listing")
 async def generate_listing(data: ListingRequest):
