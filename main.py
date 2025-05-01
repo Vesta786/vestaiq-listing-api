@@ -19,7 +19,7 @@ app.add_middleware(
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 class ListingRequest(BaseModel):
-    propertytype: str
+    propertyType: str
     location: str
     bedrooms: int
     bathrooms: int
