@@ -15,9 +15,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load the key
+# Load the OpenAI key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+# Match field names exactly with those sent by Wix
 class ListingRequest(BaseModel):
     propertyType: str
     location: str
@@ -42,7 +43,7 @@ class ListingRequest(BaseModel):
 async def generate_listing(data: ListingRequest):
     prompt = (
         f"Write a {data.tone} real estate listing for a {data.bedrooms}-bedroom, "
-        f"{data.bathrooms}-bathroom {data.property_type} in {data.location}. "
+        f"{data.bathrooms}-bathroom {data.propertyType} in {data.location}. "
         f"Highlight features such as: {data.features}. "
         "Make it engaging and ready to publish."
     )
