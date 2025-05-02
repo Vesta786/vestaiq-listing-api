@@ -59,6 +59,7 @@ async def generate_listing(data: ListingRequest):
         f"Write a {data.tone} real estate listing for a {data.bedrooms}-bedroom, "
         f"{data.bathrooms}-bathroom {data.propertyType} in {data.location}. "
         f"Highlight features such as: {data.features}. "
+        f"This property has a lease length of {data.leaseLength}. "
         "Make it engaging and ready to publish."
     )
 
