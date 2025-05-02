@@ -34,6 +34,7 @@ class ListingRequest(BaseModel):
     postcode: str
     propertySize: str
     tenure: Optional[str] = None
+    leaseLength: str 
     condition: Optional[str] = None
     recentlyRenovated: Optional[str] = None
     floorLevel: Optional[str] = None
